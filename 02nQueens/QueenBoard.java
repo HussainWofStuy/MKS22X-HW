@@ -107,19 +107,14 @@ public class QueenBoard{
 
 
 
-    
+    /*
     public static void main(String[]args){
-	QueenBoard b = new QueenBoard(8);
-	b.solve();
-	b.printSolution();
-	/*
-	System.out.println(b);
-	b.addQueen(3,0);
-	b.addQueen(0,1);
-        System.out.println(b);
-	b.removeQueen(3,0);
-        System.out.println(b);
-	*/
+	for(int k = 1; k < 11; k++){
+	    QueenBoard b = new QueenBoard(k);
+	    b.solve();
+	    b.printSolution();
+	    System.out.println();
+	}
     }
-    
+    */
 }
