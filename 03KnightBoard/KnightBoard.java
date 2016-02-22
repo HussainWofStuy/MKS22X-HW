@@ -7,7 +7,11 @@ public class KnightBoard{
     }
     
     public boolean  solve(){
-	return solveH(0,0,1,1);    
+	if(solveH(0,0,1,1)){
+	    return true;
+	}
+	System.out.println("No solution for this board!");
+	return false;
     }
 
     public boolean solveH(int row, int col, int index,  int n){
@@ -82,10 +86,13 @@ public class KnightBoard{
 	    System.out.println();
 	}
     }
-
+    /*
     public static void main (String[] args){
-	KnightBoard k = new KnightBoard(5,6);
-	k.solve();
-	k.printSolution();
+	KnightBoard k = new KnightBoard(3,5);
+	if(k.solve()){
+	    k.printSolution();
+	}
+
     }
+    */
 }
