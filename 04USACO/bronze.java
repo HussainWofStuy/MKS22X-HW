@@ -83,12 +83,12 @@ public class bronze{
 	    while(line.hasNext() && n<N){
 		g.stompDown(line.nextInt(),line.nextInt(),line.nextInt());
 		n++;
-		g.print();
-		System.out.println();
+		//g.print();
+		//System.out.println();
 	    }
 
 	    g.finalDown(D);
-	    System.out.println(g.finalVol());
+	    System.out.println(g.finalVol()+", 6, Waris, Hussain");
 	}catch(FileNotFoundException e){
 	    e.printStackTrace();
 	}
