@@ -7,55 +7,6 @@ public class Maze{
     private int startx, starty;
     private boolean animate;
     
-    //MORE FREE STUFF!!! *you can ignore all of this*
-    //Terminal keycodes to clear the terminal, or hide/show the cursor
-    private static final String CLEAR_SCREEN =  "\033[2J";
-    private static final String HIDE_CURSOR =  "\033[?25l";
-    private static final String SHOW_CURSOR =  "\033[?25h";
-    //terminal specific character to move the cursor
-    private String go(int x,int y){
-	return ("\033[" + x + ";" + y + "H");
-    }
-    
-    private String color(int foreground,int background){
-	return ("\033[0;" + foreground + ";" + background + "m");
-    }
-
-    private void wait(int millis){
-	try {
-	    Thread.sleep(millis);
-	}
-	catch (InterruptedException e) {
-	}
-    }
-    
-    public void clearTerminal(){
-	System.out.println(CLEAR_SCREEN);
-    }
-
-    public String toString(){
-	int maxx = maze.length;
-	int maxy = maze[0].length;
-	String ans = "";
-	if(animate){
-	    ans = "Solving a maze that is " + maxx + " by " + maxy + "\n";
-	}
-	for(int i = 0; i < maxx * maxy; i++){
-	    if(i % maxx == 0 && i != 0){
-		ans += "\n";
-	    }
-	    char c =  maze[i % maxx][i / maxx];
-	    if(c == '#'){
-		ans += color(38,47)+c;
-	    }else{
-		ans += color(32,40)+c;
-	    }
-	}
-	return HIDE_CURSOR + go(0,0) + ans + "\n" + SHOW_CURSOR + color(37,40);
-    }
-
-
-    //END FREE STUFF
     
     /*Constructor loads a maze text file.
       1. The file contains a rectangular ascii maze, made with the following 4 characters:
@@ -69,56 +20,61 @@ public class Maze{
       3. When the file is not found, print an error and exit the program.
     */
     public Maze(String filename, boolean ani){
-	animate = true;
-	//maze = new char[][]{{'#','#','#','#'},{'#','S',' ','#'},{'#',' ','#','#'},{'#',' ','E','#'},{'#','#','#','#'}};
-	//clearTerminal();
-	//	System.out.println(HIDE_CURSOR);
-	//System.out.println(_SCREEN);
-       	//System.out.println(SHOW_CURSOR);
+	animate = ani;
 	
-	//animate = ani;
-
-	File a = new File("data1.dat");
+	File a = new File(filename);
 	try{
 	    Scanner l = new Scanner(a);
+	    //Scanner lp = new Scanner(a);
 	    Scanner lr = new Scanner(a);
 	    Scanner lc = new Scanner(a);
+	    
 	    int R = 0;
-	    int C = 0; 
-	    while(lr.hasNextLine()){
-		R++;
-	    }
-	    String cC = lc.nextLine();
-	    System.out.println(cC);
-	    for(int i = 0; i < cC.length(); i++){
+	    int C = 0;
+	    
+	    String cC = lr.nextLine();
+	    R = cC.length();
+	    lr.close();
+	    
+	    while(lc.hasNextLine()){
 		C++;
+		lc.nextLine();
 	    }
-	   
-	    for(int i = 0; i < R; i++){
-		for(int k = 0; k < C; k++){
-		    maze[k][i] = l.next().charAt(0);
+	    lc.close();
+	    
+	    maze = new char[C][R];
+	    //char[][] smaze = new char[C][R];
+	    for(int r = 0; l.hasNextLine() && r < maze.length; r++){
+		maze[r] = l.nextLine().toCharArray();
+	    }
+	    //lp.close();
+
+	    /*
+	    for(int i = 0; i < maze.length; i++){
+		for(int k = 0; k < maze[0].length; k++){
+		    maze[i][k] = smaze[k][i];
 		}
 	    }
-
-	    //for(int i = 0; i < R; i++){
-	    //	for(int k = 0; k < C; k++){
-	    //	    System.out.print(maze[i][k]);
-	    //	}
-	    //	System.out.println();
-	    //}
+	    */
 	    
-	    for(int i = 0; i < R; i++){
-		for(int k = 0; k < C; k++){
-		    if(maze[i][k]=='S'){
-			startx = i;
-			starty = k;
+	    l.close();
+	    
+	    for(int k = 0; k < maze.length; k++){
+		for(int i = 0; i < maze[0].length; i++){
+		    if(maze[k][i]=='S'){
+			startx = k;
+			starty = i;
+			k = maze.length;
+			i = maze[0].length;
 		    }
 		}
 	    }
-        }catch(FileNotFoundException e){
-	    System.out.println("This file does not exist");
-        }
-        System.out.print(this);
+	    
+	}
+	catch(FileNotFoundException e){
+	    System.out.print("Breh");
+	}
+	
     }
 
 
@@ -151,49 +107,91 @@ public class Maze{
         All visited spots that were not part of the solution are changed to '.'
         All visited spots that are part of the solution are changed to '@'
 
-    */
+     */
+
     private boolean solve(int x, int y){
 	if(animate){
-	    toString();
+	    System.out.println(this);
 	    wait(20);
 	}
 
-	//COMPLETE SOLVE
 	if(maze[x][y]=='E'){
 	    return true;
 	}
-	maze[x][y] = '@';
-	if(canMove(x+1, y)){
-	    maze[x][y] = '.';
-	    solve(x+1, y);
+	
+	if(maze[x][y]==' '){
+	    
+	    maze[x][y] = '@';
+	    if(solve(x+1,y)||solve(x,y+1)||solve(x,y-1)||solve(x-1,y)){
+		return true;
+	    }else{
+		maze[x][y] = '.';
+	    }
 	}
-	if(canMove(x, y+1)){
-	    maze[x][y] = '.';
-	    solve(x, y+1);
-	}
-	if(canMove(x-1, y)){
-	    maze[x][y] = '.';
-	    solve(x-1, y);
-	}
-	if(canMove(x, y-1)){
-	    maze[x][y] = '.';
-	    solve(x, y-1);
-	}
-	maze[x][y] = '.';
+		
+	//animate = false;
 	return false; //so it compiles
     }
 
-    public boolean canMove(int x, int y){
-	if(x >= 0 && x < maze.length && y>=0 && y < maze[0].length){
-	    if(maze[x][y]!='#'){
-		return true;
-	    }
+    
+
+
+
+
+
+    
+    //FREE STUFF!!! *you should be aware of this
+        //MORE FREE STUFF!!! *you can ignore all of this*
+    //Terminal keycodes to clear the terminal, or hide/show the cursor
+    private static final String CLEAR_SCREEN =  "\033[2J";
+    private static final String HIDE_CURSOR =  "\033[?25l";
+    private static final String SHOW_CURSOR =  "\033[?25h";
+    //terminal specific character to move the cursor
+    private String go(int x,int y){
+	return ("\033[" + x + ";" + y + "H");
+    }
+    
+    private String color(int foreground,int background){
+	return ("\033[0;" + foreground + ";" + background + "m");
+    }
+
+    private void wait(int millis){
+	try {
+	    Thread.sleep(millis);
 	}
-	return false;
+	catch (InterruptedException e) {
+	}
+    }
+    
+    public void clearTerminal(){
+	System.out.println(CLEAR_SCREEN);
+    }
+
+    public String toString(){
+	int maxx = maze.length;
+	int maxy = maze[0].length;
+	String ans = "";
+	if(animate){
+	    ans = "Solving a maze that is " + maxx + " by " + maxy + "\n";
+	}
+	for(int i = 0; i < maxx; i++){
+	    for(int k = 0; k < maxy; k++){
+		char c =  maze[i][k];
+		if(c == '#'){
+		    ans += color(38,47)+c;
+		}else{
+		    ans += color(32,40)+c;
+		}
+	    }
+	    ans += "\n";
+	}
+	return HIDE_CURSOR + go(0,0) + ans + "\n" + SHOW_CURSOR + color(37,40);
     }
 
 
-    //FREE STUFF!!! *you should be aware of this
+    //END FREE STUFF
 
+
+    
 
 }
