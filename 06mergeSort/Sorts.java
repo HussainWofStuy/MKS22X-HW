@@ -1,6 +1,10 @@
 import java.util.*;
 public class Sorts{
     public Sorts(){}
+
+    public String name(){
+	return "6,Waris,Husain";
+    }
     
     public static void printArray(int[] data){
 	String s = "[";
