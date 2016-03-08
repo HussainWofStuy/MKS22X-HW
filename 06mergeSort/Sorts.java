@@ -127,7 +127,7 @@ public class Sorts{
 	}
 	return answer;
     }
-
+    
     /*
     public static void main(String[] args){
 	//Sorts g = new Sorts();
@@ -136,17 +136,35 @@ public class Sorts{
 	for(int i = 0; i < tA.length; i++){
 	    tA[i] = (int)(Math.random()*100000);
 	}
-	int[] tB = new int[]{2, 4, 6, 8, 10};
-
+	int[] tB = new int[1000000];
+	for(int i = 0; i < tB.length; i++){
+	    tB[i] = (int)(Math.random()*100000);
+	}
 
 	//int[] tC = new int[]{2};
 	//int[] tD = new int[]{1};
 	//System.out.println(Arrays.toString(new Sorts().merge(tC,tD)));
 
 	//System.out.println(Arrays.toString(tA));
+	
+	long startTime = System.nanoTime();
 	mergesort(tA);
+	long endTime = System.nanoTime();
+
+	long duration= (endTime - startTime)/1000000;
+	System.out.println(duration + " milliseconds");
+	
 	//System.out.println(Arrays.toString(tA));
 	//System.out.println(Arrays.toString(tA));
+
+	
+	long startTime1 = System.nanoTime();
+	Arrays.sort(tB);
+	long endTime1 = System.nanoTime();
+
+	long duration1 = (endTime1 - startTime1)/1000000;
+	System.out.println(duration1 + " milliseconds");
+	
     }
     */
 }
