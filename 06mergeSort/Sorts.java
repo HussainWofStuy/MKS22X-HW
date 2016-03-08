@@ -88,7 +88,7 @@ public class Sorts{
 	//System.out.println("-----------------");
     }
 
-    public static void  mergeSort(int[] a){
+    public static void  mergesort(int[] a){
 	int[] b = new int[a.length];
 	b = new Sorts().mergeH(a);
 	for(int i = 0; i < a.length; i++){
@@ -101,13 +101,8 @@ public class Sorts{
 	int sd = a.length / 2;
 	int[] a1 = new int[sd];
 	int[] a2 = new int[a.length-sd];
-	for(int i = 0; i < a1.length; i++){
-	    a1[i] = a[i];
-	}
-	for(int i = 0; i < a2.length; i++){
-	    a2[i] = a[sd];
-	    sd++;
-	}
+	for(int i = 0; i < a1.length; i++){a1[i] = a[i];}
+	for(int i = 0; i < a2.length; i++){a2[i] = a[sd]; sd++;}
 	//System.out.println(Arrays.toString(a1));
 	//System.out.println(Arrays.toString(a2));
 	//System.out.println(Arrays.toString(a));
@@ -137,7 +132,10 @@ public class Sorts{
     public static void main(String[] args){
 	//Sorts g = new Sorts();
 	
-	int[] tA = new int[]{2,1,3,13,6,5,9,2,11,10};
+	int[] tA = new int[1000000];
+	for(int i = 0; i < tA.length; i++){
+	    tA[i] = (int)(Math.random()*100000);
+	}
 	int[] tB = new int[]{2, 4, 6, 8, 10};
 
 
@@ -145,9 +143,9 @@ public class Sorts{
 	//int[] tD = new int[]{1};
 	//System.out.println(Arrays.toString(new Sorts().merge(tC,tD)));
 
-	System.out.println(Arrays.toString(tA));
-	mergeSort(tA);
-	System.out.println(Arrays.toString(tA));
+	//System.out.println(Arrays.toString(tA));
+	mergesort(tA);
+	//System.out.println(Arrays.toString(tA));
 	//System.out.println(Arrays.toString(tA));
     }
     */
