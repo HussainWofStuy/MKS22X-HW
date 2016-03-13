@@ -106,7 +106,7 @@ public class Quick{
     public static int[] partition(int[] data, int left, int right){
 	int i = left + (int)(Math.random()*(right-left));
 	swap(data,right,i);	
-	int l = left, r = right-1, c = 0;;
+	int l = left, r = right-1, c = 0;
 	while(l!=r){
 	    if(data[l] == data[right]){c++;}
 	    if(data[l] > data[right]){
@@ -149,17 +149,23 @@ public class Quick{
 
 
 
-    
+    /*
     public static void main(String[] args){
-	int[] g = new int[]{4,3,9,4,10,11,5,3,2,-2,13};
-
-	System.out.println(Arrays.toString(g));
-        //System.out.println(partitionOld(g, 0, g.length-1));
-	//System.out.println(Arrays.toString(partition(g, 0, g.length-1)));
-	//System.out.println(quickselect(g,0));
-	//quickSort(g);
-	System.out.println(Arrays.toString(g));
+	int[] tC1 = new int[4000000];
+	int[] tC2 = new int[tC1.length];
+	for(int i = 0; i < tC1.length; i++){
+	    tC1[i] = Integer.MIN_VALUE + (int)(Math.random()*(Integer.MAX_VALUE-Integer.MIN_VALUE));
+	    tC2[i] = tC1[i];
+	}
 	
+	long startTime = System.nanoTime();
+	quickSort(tC1);
+	long endTime = System.nanoTime();
+
+	long duration = (endTime - startTime)/100000;
+	System.out.println(duration);
+	Arrays.sort(tC2);
+	System.out.println(Arrays.equals(tC1,tC2));
     }
-    
+    */
 }
