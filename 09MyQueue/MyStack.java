@@ -21,40 +21,37 @@ public class MyStack<T> extends MyLinkedList<T>{
     public boolean isEmpty(){
 	return size()==0;
     }
-    public static boolean isMatching(String s){
-	MyStack<Character> S = new MyStack<Character>();
-	for(char next : s.toCharArray()){
-	    if(next == '{' || next == '[' || next == '<' || next == '('){
-		S.push(next);
-	    }
-	    if(next == '}' || next == ']' || next == '>' || next == ')'){
-		try{
-		    char m = getMatch(next);
-		    if(S.pop() != m){
-			System.out.println("Mismatch");
-			return false;
-		    }
-		}catch(NoSuchElementException e){
-		    System.out.println("Colse without any opens left!");
-		    return false;
-		}
-	    }
-	}
-	return S.isEmpty();
+    public String toString(){
+        System.out.print(L);
+	return "";
     }
 
-    public static char getMatch(char c){
-	char match = 0;
-	if(c == '}'){match = '{';}
-	if(c == ')'){match = '(';}
-	if(c == ']'){match = '[';}
-	if(c == '>'){match = '<';}
-	return match;
-    }
-    
     public static void main(String[] args){
-	String input = "";
-	if(args.length > 0){input =  args[0];}
-	System.out.println(isMatching(input));
+	/*
+	Random rand = new Random(0);
+	for(int i = 0; i < 6000; i++){
+	    int op = rand.nextInt(4);
+	    if(op == 0 || S.size()==0){
+		s.push(""+i);
+		S.push(""+i);
+	    }else{
+		if(op == 1){
+		    s.push(""+i);
+		    S.push(""+i);
+		}
+		if(op > 1){
+		    if(!s.peek().equals(S.peek())){
+			System.out.println("Non matching elements at end");
+			System.exit(1);
+		    }
+		    if(!s.pop().equals(S.pop())){
+			System.out.println("Non matching elements remove");
+			System.exit(1);
+		    }
+		}	       
+	    }
+	}
+	System.out.println(s);
+	*/
     }
 }
