@@ -38,7 +38,11 @@ public class MyHeap<T extends Comparable<T>>{
     }
     
     public String toString(){
-	return Arrays.toString(heap);
+	String s = "[";
+	for(int i = 1; i < size; i++){
+	    s += heap[i]+", ";;
+	}
+	return s + heap[size] + "]";
     }
 
 
@@ -125,7 +129,7 @@ public class MyHeap<T extends Comparable<T>>{
 
     /*
     public static void main(String[] args){
-	Integer[] y = {0, 5, 10, 3, 2, 7, 9};
+	Integer[] y = {0, 5, 10, 3, 2, 7, 9, 11, -1};
 	MyHeap<Integer> h = new MyHeap<Integer>(y, false);
 	System.out.println(h);
 	h.add(6);
